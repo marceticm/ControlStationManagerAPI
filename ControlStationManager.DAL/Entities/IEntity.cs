@@ -7,6 +7,6 @@ namespace ControlStationManager.DAL.Entities
     public interface IEntity
     {
         int Id { get; set; }
-        //int UserId { get; set; }
+        int UserId { get; set; }
     }
 }

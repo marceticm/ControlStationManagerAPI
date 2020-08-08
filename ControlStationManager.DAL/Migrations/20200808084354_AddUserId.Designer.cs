@@ -4,14 +4,16 @@ using ControlStationManager.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControlStationManager.DAL.Migrations
 {
     [DbContext(typeof(ControlStationContext))]
-    partial class ControlStationContextModelSnapshot : ModelSnapshot
+    [Migration("20200808084354_AddUserId")]
+    partial class AddUserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,19 +49,19 @@ namespace ControlStationManager.DAL.Migrations
                         {
                             Id = -1,
                             Name = "Aleksinac 1",
-                            UserId = 1
+                            UserId = 0
                         },
                         new
                         {
                             Id = -2,
                             Name = "Beograd",
-                            UserId = 1
+                            UserId = 0
                         },
                         new
                         {
                             Id = -3,
                             Name = "Kragujevac",
-                            UserId = 4
+                            UserId = 0
                         });
                 });
 
@@ -95,7 +97,7 @@ namespace ControlStationManager.DAL.Migrations
                             ControlStationId = -1,
                             LastCheckDate = new DateTime(2020, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NextCheckDate = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserId = 1
+                            UserId = 0
                         },
                         new
                         {
@@ -103,7 +105,7 @@ namespace ControlStationManager.DAL.Migrations
                             ControlStationId = -1,
                             LastCheckDate = new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NextCheckDate = new DateTime(2020, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserId = 1
+                            UserId = 0
                         });
                 });
 

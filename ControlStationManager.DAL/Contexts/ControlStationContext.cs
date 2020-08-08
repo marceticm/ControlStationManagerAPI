@@ -21,9 +21,9 @@ namespace ControlStationManager.DAL.Contexts
 
             //seed control stations
             modelBuilder.Entity<ControlStation>().HasData(
-                new ControlStation { Id = -1, Name = "Aleksinac 1" },
-                new ControlStation { Id = -2, Name = "Beograd" },
-                new ControlStation { Id = -3, Name = "Kragujevac" }
+                new ControlStation { Id = -1, Name = "Aleksinac 1", UserId = 1 },
+                new ControlStation { Id = -2, Name = "Beograd", UserId = 1 },
+                new ControlStation { Id = -3, Name = "Kragujevac", UserId = 4 }
                 );
 
             // seed fire extinguishers
@@ -33,15 +33,18 @@ namespace ControlStationManager.DAL.Contexts
                     Id = -1,
                     LastCheckDate = new DateTime(2020, 2, 1),
                     NextCheckDate = new DateTime(2020, 8, 1),
-                    ControlStationId = -1
+                    ControlStationId = -1,
+                    UserId = 1
                 },
                 new StationItem
                 {
                     Id = -2,
                     LastCheckDate = new DateTime(2020, 6, 1),
                     NextCheckDate = new DateTime(2020, 12, 1),
-                    ControlStationId = -1
+                    ControlStationId = -1,
+                    UserId = 1
                 });
+
         }
 
     }

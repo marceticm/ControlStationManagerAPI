@@ -18,7 +18,7 @@ namespace ControlStationManager.DAL.Repositories
         public async Task<IEnumerable<TEntity>> GetAll(int userId)
         {
             return await Context.Set<TEntity>()
-                //.Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId)
                 .ToListAsync();
         }
 
