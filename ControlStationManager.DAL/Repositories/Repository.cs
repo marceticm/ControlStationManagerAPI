@@ -22,9 +22,11 @@ namespace ControlStationManager.DAL.Repositories
                 .ToListAsync();
         }
 
-        public async Task<TEntity> Get(int id, int userId)
+        public async Task<TEntity> Get(int userId, int id)
         {
-            return await Context.Set<TEntity>().FindAsync(id);
+            return await Context.Set<TEntity>()
+                .FirstOrDefaultAsync(x => x.UserId == userId 
+                    && x.Id == id);
         }
 
         public async Task Add(TEntity entity)

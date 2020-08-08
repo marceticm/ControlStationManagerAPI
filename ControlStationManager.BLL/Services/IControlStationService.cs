@@ -7,9 +7,9 @@ namespace ControlStationManager.BLL.Services
 {
     public interface IControlStationService
     {
-        void Add(ControlStation entity);
-        Task<ControlStation> Get(int id);
         Task<IEnumerable<ControlStationDto>> GetControlStations(int userId);
+        Task<ControlStationDto> GetControlStation(int userId, int stationId);
+        void Add(ControlStation entity);
         void Remove(ControlStation entity);
     }
 }

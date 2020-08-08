@@ -25,9 +25,10 @@ namespace ControlStationManager.BLL.Services
             return _mapper.Map<IEnumerable<ControlStationDto>>(controlStations);
         }
 
-        public Task<ControlStation> Get(int id)
+        public async Task<ControlStationDto> GetControlStation(int userId, int stationId)
         {
-            throw new NotImplementedException();
+            var controlStation = await _repository.Get(userId, stationId);
+            return _mapper.Map<ControlStationDto>(controlStation);
         }
 
         public void Add(ControlStation entity)

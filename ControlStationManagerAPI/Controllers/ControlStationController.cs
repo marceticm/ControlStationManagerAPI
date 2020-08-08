@@ -1,4 +1,5 @@
 ﻿using ControlStationManager.BLL.Services;
+using ControlStationManager.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,12 +20,25 @@ namespace ControlStationManagerAPI.Controllers
             _controlStationService = controlStationService;
         }
 
+        [HttpGet]
         public async Task<ActionResult> GetControlStations()
         {
             var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var result = await _controlStationService.GetControlStations(userId);
             return Ok(result);
         }
+
+        [HttpGet("{stationId}")]
+        public async Task<ActionResult<ControlStationDto>> GetControlStation(int stationId)
+        {
+            var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var result = await _controlStationService.GetControlStation(userId, stationId);
+            if (result == null)
+                return NotFound();
+
+            return result;
+        }
+
 
 
     }
