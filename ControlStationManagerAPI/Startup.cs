@@ -1,8 +1,6 @@
 using AutoMapper;
 using ControlStationManager.BLL.Services;
 using ControlStationManager.DAL.Contexts;
-using ControlStationManager.DAL.Entities;
-using ControlStationManager.DAL.Models;
 using ControlStationManager.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

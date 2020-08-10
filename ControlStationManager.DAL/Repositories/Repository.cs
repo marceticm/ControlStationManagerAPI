@@ -29,16 +29,19 @@ namespace ControlStationManager.DAL.Repositories
                     && x.Id == id);
         }
 
-        public async Task Add(TEntity entity)
+        public async Task<TEntity> Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
             await Context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task Update(TEntity entity)
-        {
-            throw new System.NotImplementedException();
-        }
+        //public async Task<TEntity> Update(TEntity entity)
+        //{
+        //    var result = await Context.
+
+        //    throw new System.NotImplementedException();
+        //}
 
         public async Task Remove(int id)
         {

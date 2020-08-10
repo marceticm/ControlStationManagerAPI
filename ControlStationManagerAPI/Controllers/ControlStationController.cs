@@ -39,7 +39,44 @@ namespace ControlStationManagerAPI.Controllers
             return result;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<ControlStationDto>> CreateControlStation(ControlStationForCreateDto controlStation)
+        {
+            var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            controlStation.UserId = userId;
 
+            ControlStationDto createdStation;
+            try
+            {
+                createdStation = await _controlStationService.Add(controlStation);
+            }
+            catch (InvalidControlStationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            if (createdStation == null)
+                return BadRequest();
+
+            return Created("", createdStation);
+            //return CreatedAtAction(nameof(GetControlStation), new { id = createdStation.Id }, createdStation);
+        }
+
+        [HttpPut("{stationId}")]
+        public async Task<ActionResult<ControlStationDto>> UpdateControlStation(int stationId, ControlStationForCreateDto controlStation)
+        {
+            var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            controlStation.UserId = userId;
+
+            try
+            {
+                var result = await _controlStationService.Update(userId, stationId, controlStation);
+                return result;
+            }
+            catch (ControlStationNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
 
     }
 }

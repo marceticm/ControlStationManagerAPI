@@ -9,6 +9,7 @@ namespace ControlStationManagerAPI.MapProfiles
         public ControlStationMapProfile()
         {
             CreateMap<ControlStation, ControlStationDto>();
+            CreateMap<ControlStationForCreateDto, ControlStation>();
         }
     }
 }

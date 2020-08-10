@@ -31,10 +31,36 @@ namespace ControlStationManager.BLL.Services
             return _mapper.Map<ControlStationDto>(controlStation);
         }
 
-        public void Add(ControlStation entity)
+        public async Task<ControlStationDto> Add(ControlStationForCreateDto controlStation)
         {
-            throw new NotImplementedException();
+            if (controlStation == null)
+                return null;
+
+            if (await _repository.ControlStationExists(controlStation.Name))
+            {
+                throw new InvalidControlStationException(controlStation.Name);
+            }
+
+            var mappedStation = _mapper.Map<ControlStation>(controlStation);
+            var createdStation = await _repository.Add(mappedStation);
+
+            return _mapper.Map<ControlStationDto>(createdStation);
         }
+
+        public async Task<ControlStationDto> Update(int userId, int stationId, ControlStationForCreateDto controlStation)
+        {
+            var stationToUpdate = GetControlStation(userId, stationId);
+            if (stationToUpdate == null)
+            {
+                throw new ControlStationNotFoundException(stationId);
+            }
+
+            var mappedStation = _mapper.Map<ControlStation>(controlStation);
+            var updatedStation = await _repository.UpdateControlStation(userId, mappedStation);
+
+            return _mapper.Map<ControlStationDto>(updatedStation);
+        }
+
 
         public void Remove(ControlStation entity)
         {
@@ -43,4 +69,36 @@ namespace ControlStationManager.BLL.Services
 
 
     }
+
+    [Serializable]
+    public class InvalidControlStationException : Exception
+    {
+        public InvalidControlStationException()
+        {
+
+        }
+
+        public InvalidControlStationException(string name)
+        : base(String.Format("ControlStation with name: {0} already exists.", name))
+        {
+
+        }
+    }
+
+    [Serializable]
+    public class ControlStationNotFoundException : Exception
+    {
+        public ControlStationNotFoundException()
+        {
+
+        }
+
+        public ControlStationNotFoundException(int stationId)
+        : base(String.Format($"Control Station with id = {stationId} not found."))
+        {
+
+        }
+    }
+
+
 }
