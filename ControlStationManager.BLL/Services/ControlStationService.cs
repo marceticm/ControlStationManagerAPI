@@ -48,7 +48,7 @@ namespace ControlStationManager.BLL.Services
             return _mapper.Map<ControlStationDto>(createdStation);
         }
 
-        public async Task<ControlStationDto> Update(int userId, int stationId, 
+        public async Task<ControlStationDto> Update(int userId, int stationId,
             ControlStationForCreateDto controlStation)
         {
             if (await _repository.ControlStationExists(controlStation.UserId,
@@ -74,9 +74,16 @@ namespace ControlStationManager.BLL.Services
         }
 
 
-        public void Remove(ControlStation entity)
+        public async Task<ControlStationDto> Remove(int userId, int stationId)
         {
-            throw new NotImplementedException();
+            var stationToDelete = await GetControlStation(userId, stationId);
+            if (stationToDelete == null)
+            {
+                throw new ControlStationNotFoundException(stationId);
+            }
+
+            var deletedStation = await _repository.Remove(userId, stationId);
+            return _mapper.Map<ControlStationDto>(deletedStation);
         }
 
 

@@ -36,24 +36,22 @@ namespace ControlStationManager.DAL.Repositories
             return entity;
         }
 
-        //public async Task<TEntity> Update(TEntity entity)
-        //{
-        //    var result = await Context.
-
-        //    throw new System.NotImplementedException();
-        //}
-
-        public async Task Remove(int id)
+        public async Task<TEntity> Remove(int userId, int id)
         {
             //Task<TEntity> entity = Context.Set<TEntity>()
             //    .SingleOrDefaultAsync(x => 
             //        (int)x.GetType().GetProperty("Id").GetValue(x, null) == id);
 
             Task<TEntity> entity = Context.Set<TEntity>()
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.Id == id);
+            if (entity != null)
+            {
+                Context.Set<TEntity>().Remove(entity.Result);
+                await Context.SaveChangesAsync();
+                return entity.Result;
+            }
 
-            Context.Set<TEntity>().Remove(entity.Result);
-            await Context.SaveChangesAsync();
+            return null;
         }
 
         

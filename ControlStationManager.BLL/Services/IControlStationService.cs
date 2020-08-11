@@ -11,6 +11,6 @@ namespace ControlStationManager.BLL.Services
         Task<ControlStationDto> GetControlStation(int userId, int stationId);
         Task<ControlStationDto> Add(ControlStationForCreateDto controlStation);
         Task<ControlStationDto> Update(int userId, int stationId, ControlStationForCreateDto controlStation);
-        void Remove(ControlStation entity);
+        Task<ControlStationDto> Remove(int userId, int stationId);
     }
 }

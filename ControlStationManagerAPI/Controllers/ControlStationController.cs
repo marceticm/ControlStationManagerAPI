@@ -67,10 +67,10 @@ namespace ControlStationManagerAPI.Controllers
         {
             controlStation.UserId = userId;
 
+            ControlStationDto result;
             try
             {
-                var result = await _controlStationService.Update(userId, stationId, controlStation);
-                return result;
+                result = await _controlStationService.Update(userId, stationId, controlStation);
             }
             catch (ControlStationNotFoundException ex)
             {
@@ -80,6 +80,22 @@ namespace ControlStationManagerAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            return result;
+        }
+
+        [HttpDelete("{stationId}")]
+        public async Task<ActionResult<ControlStationDto>> DeleteControlStation(int stationId)
+        {
+            ControlStationDto result;
+            try
+            {
+                result = await _controlStationService.Remove(userId, stationId);
+            }
+            catch (ControlStationNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            return result;
         }
 
     }
