@@ -15,19 +15,28 @@ namespace ControlStationManager.DAL.Repositories
             _context = context;
         }
 
-        public async Task<bool> ControlStationExists(string name)
+        public async Task<bool> ControlStationExists(int userId, int stationId, string stationName)
         {
-            if (await _context.ControlStations.AnyAsync(x => x.Name == name))
-                return true;
+            bool result;
+            if (stationId == 0) // insert
+            {
+                result = await _context.ControlStations
+                    .AnyAsync(x => x.UserId == userId && x.Name == stationName);
+            }
+            else // update
+            {
+                result = await _context.ControlStations
+                    .AnyAsync(x => x.UserId == userId && x.Id != stationId && x.Name == stationName);
+            }
 
-            return false;
-
+            return result;
         }
 
-        public async Task<ControlStation> UpdateControlStation(int userId, ControlStation controlStation)
+        public async Task<ControlStation> UpdateControlStation(int userId, 
+            int stationId, ControlStation controlStation)
         {
             var result = await _context.ControlStations
-                .FirstOrDefaultAsync(x => x.Id == controlStation.Id && x.UserId == userId);
+                .FirstOrDefaultAsync(x => x.Id == stationId && x.UserId == userId);
 
             if (result != null)
             {

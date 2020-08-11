@@ -6,7 +6,7 @@ namespace ControlStationManager.DAL.Repositories
 {
     public interface IControlStationRepository : IRepository<ControlStation>
     {
-        Task<bool> ControlStationExists(string name);
-        Task<ControlStation> UpdateControlStation(int userId, ControlStation controlStation);
+        Task<bool> ControlStationExists(int userId, int stationId, string stationName);
+        Task<ControlStation> UpdateControlStation(int userId, int stationId, ControlStation controlStation);
     }
 }

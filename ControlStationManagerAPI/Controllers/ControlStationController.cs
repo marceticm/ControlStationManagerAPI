@@ -1,6 +1,7 @@
 ﻿using ControlStationManager.BLL.Services;
 using ControlStationManager.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -14,16 +15,18 @@ namespace ControlStationManagerAPI.Controllers
     public class ControlStationController : ControllerBase
     {
         private readonly IControlStationService _controlStationService;
+        private readonly int userId;
 
-        public ControlStationController(IControlStationService controlStationService)
+        public ControlStationController(IControlStationService controlStationService,
+            IHttpContextAccessor httpContextAccessor)
         {
             _controlStationService = controlStationService;
+            userId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
         [HttpGet]
         public async Task<ActionResult> GetControlStations()
         {
-            var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var result = await _controlStationService.GetControlStations(userId);
             return Ok(result);
         }
@@ -31,7 +34,6 @@ namespace ControlStationManagerAPI.Controllers
         [HttpGet("{stationId}")]
         public async Task<ActionResult<ControlStationDto>> GetControlStation(int stationId)
         {
-            var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var result = await _controlStationService.GetControlStation(userId, stationId);
             if (result == null)
                 return NotFound();
@@ -42,7 +44,6 @@ namespace ControlStationManagerAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ControlStationDto>> CreateControlStation(ControlStationForCreateDto controlStation)
         {
-            var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             controlStation.UserId = userId;
 
             ControlStationDto createdStation;
@@ -64,7 +65,6 @@ namespace ControlStationManagerAPI.Controllers
         [HttpPut("{stationId}")]
         public async Task<ActionResult<ControlStationDto>> UpdateControlStation(int stationId, ControlStationForCreateDto controlStation)
         {
-            var userId = Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             controlStation.UserId = userId;
 
             try
@@ -75,6 +75,10 @@ namespace ControlStationManagerAPI.Controllers
             catch (ControlStationNotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (InvalidControlStationException ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 

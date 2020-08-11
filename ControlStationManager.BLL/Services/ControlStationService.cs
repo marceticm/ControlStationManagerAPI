@@ -36,7 +36,8 @@ namespace ControlStationManager.BLL.Services
             if (controlStation == null)
                 return null;
 
-            if (await _repository.ControlStationExists(controlStation.Name))
+            if (await _repository.ControlStationExists(controlStation.UserId,
+                0, controlStation.Name))
             {
                 throw new InvalidControlStationException(controlStation.Name);
             }
@@ -47,16 +48,27 @@ namespace ControlStationManager.BLL.Services
             return _mapper.Map<ControlStationDto>(createdStation);
         }
 
-        public async Task<ControlStationDto> Update(int userId, int stationId, ControlStationForCreateDto controlStation)
+        public async Task<ControlStationDto> Update(int userId, int stationId, 
+            ControlStationForCreateDto controlStation)
         {
-            var stationToUpdate = GetControlStation(userId, stationId);
+            if (await _repository.ControlStationExists(controlStation.UserId,
+                stationId, controlStation.Name))
+            {
+                throw new InvalidControlStationException(controlStation.Name);
+            }
+
+            var stationToUpdate = await GetControlStation(userId, stationId);
             if (stationToUpdate == null)
             {
                 throw new ControlStationNotFoundException(stationId);
             }
 
             var mappedStation = _mapper.Map<ControlStation>(controlStation);
-            var updatedStation = await _repository.UpdateControlStation(userId, mappedStation);
+            var updatedStation = await _repository.UpdateControlStation(userId, stationId, mappedStation);
+            if (updatedStation == null)
+            {
+                throw new ControlStationNotFoundException(stationId);
+            }
 
             return _mapper.Map<ControlStationDto>(updatedStation);
         }

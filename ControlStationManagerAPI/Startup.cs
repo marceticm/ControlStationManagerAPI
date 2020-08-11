@@ -42,6 +42,8 @@ namespace ControlStationManagerAPI
 
             services.AddSingleton(Configuration);
 
+            services.AddHttpContextAccessor();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
