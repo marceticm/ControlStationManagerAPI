@@ -38,11 +38,11 @@ namespace ControlStationManagerAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]UserForLoginDto user)
         {
-            var result = await _authService.Login(user);
-            if (result == null)
+            var token = await _authService.Login(user);
+            if (token == null)
                 return Unauthorized();
 
-            return Ok(new {result});
+            return Ok(new {token});
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using ControlStationManager.BLL.Services;
 using ControlStationManager.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ControlStationManagerAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")] // to do: rename controller to plural
     [ApiController]
     public class ControlStationController : ControllerBase // to do: implement logging
@@ -18,7 +21,8 @@ namespace ControlStationManagerAPI.Controllers
             IHttpContextAccessor httpContextAccessor)
         {
             _controlStationService = controlStationService;
-            userId = 4; // Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //userId = 4; 
+            userId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
         [HttpGet]

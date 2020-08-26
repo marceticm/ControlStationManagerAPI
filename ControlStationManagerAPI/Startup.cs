@@ -69,7 +69,7 @@ namespace ControlStationManagerAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyMethod());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
 
             app.UseRouting();
