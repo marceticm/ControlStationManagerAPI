@@ -21,10 +21,11 @@ namespace ControlStationManagerAPI.Controllers
             IHttpContextAccessor httpContextAccessor)
         {
             _controlStationService = controlStationService;
-            //userId = 4; 
-            userId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            userId = 4;
+            //userId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetControlStations()
         {
