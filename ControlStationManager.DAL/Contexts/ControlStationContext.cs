@@ -1,6 +1,7 @@
 ﻿using ControlStationManager.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Text;
 
 namespace ControlStationManager.DAL.Contexts
 {
@@ -18,6 +19,23 @@ namespace ControlStationManager.DAL.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+            //seed Users
+            CreatePasswordHash("dusan11", out byte[] passwordHash, out byte[] passwordSalt);
+            modelBuilder.Entity<User>().HasData(
+                new User {
+                    Id = 1,
+                    Username = "Dusan",
+                    FirstName = "Dusan",
+                    LastName = "Glisic",
+                    DateOfBirth = new DateTime(1992, 9, 27),
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    JobTitle = "engineer",
+                    EmailAddress = "marcetic18@hotmail.com",
+                    PhotoUrl = "https://randomuser.me/api/portraits/men/72.jpg"
+                }); ;
 
             //seed control stations
             modelBuilder.Entity<ControlStation>().HasData(
@@ -47,5 +65,13 @@ namespace ControlStationManager.DAL.Contexts
 
         }
 
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
     }
 }
