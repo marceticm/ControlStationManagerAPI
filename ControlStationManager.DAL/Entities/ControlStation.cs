@@ -11,6 +11,7 @@ namespace ControlStationManager.DAL.Entities
         public string Name { get; set; }
         [MaxLength(50)]
         public string Type { get; set; }
+        public string Address { get; set; }
         public List<StationItem> StationItems { get; set; } 
             = new List<StationItem>();
     }

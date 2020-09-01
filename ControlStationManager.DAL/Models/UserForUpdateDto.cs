@@ -4,9 +4,8 @@ using System.Text;
 
 namespace ControlStationManager.DAL.Models
 {
-    public class UserForDisplayDto
+    public class UserForUpdateDto
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

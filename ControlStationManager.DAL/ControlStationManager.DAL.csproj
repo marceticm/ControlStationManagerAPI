@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200831143346_ExtendedUserModel.cs" />
     <Compile Remove="Migrations\20200831143346_ExtendedUserModel.Designer.cs" />
+    <Compile Remove="Migrations\20200901081836_AddedMoreStations.cs" />
+    <Compile Remove="Migrations\20200901081836_AddedMoreStations.Designer.cs" />
+    <Compile Remove="Migrations\20200901082217_AddedMoreStations.cs" />
+    <Compile Remove="Migrations\20200901082217_AddedMoreStations.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -43,7 +43,8 @@ namespace ControlStationManagerAPI
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
-
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddSingleton(Configuration);
 
             services.AddHttpContextAccessor();

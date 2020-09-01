@@ -9,6 +9,7 @@ namespace ControlStationManagerAPI.MapProfiles
         public UserMapProfile()
         {
             CreateMap<User, UserForDisplayDto>();
+            CreateMap<UserForUpdateDto, User>();
         }
     }
 }

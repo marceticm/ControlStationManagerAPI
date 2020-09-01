@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ControlStationManager.DAL.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using ControlStationManager.DAL.Entities;
-using ControlStationManager.DAL.Models;
 
 namespace ControlStationManager.BLL.Services
 {
