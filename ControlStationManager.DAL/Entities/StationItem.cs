@@ -6,6 +6,8 @@ namespace ControlStationManager.DAL.Entities
 {
     public class StationItem : BaseEntity
     {
+        public string Type { get; set; }
+        public string SerialNumber { get; set; }
         public DateTime LastCheckDate { get; set; }
         public DateTime NextCheckDate { get; set; }
         public ControlStation ControlStation { get; set; }

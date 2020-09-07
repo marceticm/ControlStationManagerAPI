@@ -25,7 +25,6 @@ namespace ControlStationManagerAPI.Controllers
             //userId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> GetControlStations()
         {

@@ -55,17 +55,102 @@ namespace ControlStationManager.DAL.Contexts
             modelBuilder.Entity<StationItem>().HasData(
                 new StationItem
                 {
-                    Id = -1,
+                    Id = 1,
+                    Type = "Fire Extinguisher",
+                    SerialNumber = "123456789",
                     LastCheckDate = new DateTime(2020, 2, 1),
-                    NextCheckDate = new DateTime(2020, 8, 1),
+                    NextCheckDate = new DateTime(2020, 10, 1),
                     ControlStationId = 1,
                     UserId = 1
                 },
                 new StationItem
                 {
-                    Id = -2,
+                    Id = 2,
+                    Type = "Fire Extinguisher",
+                    SerialNumber = "123456781",
+                    LastCheckDate = new DateTime(2020, 6, 1),
+                    NextCheckDate = new DateTime(2020, 11, 1),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    Id = 3,
+                    Type = "Filter",
+                    SerialNumber = "123456782",
                     LastCheckDate = new DateTime(2020, 6, 1),
                     NextCheckDate = new DateTime(2020, 12, 1),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    Id = 4,
+                    Type = "Heater",
+                    SerialNumber = "123456783",
+                    LastCheckDate = new DateTime(2020, 8, 14),
+                    NextCheckDate = new DateTime(2021, 1, 1),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    Id = 5,
+                    Type = "Fire Extinguisher",
+                    SerialNumber = "123456784",
+                    LastCheckDate = new DateTime(2020, 6, 1),
+                    NextCheckDate = new DateTime(2021, 2, 21),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    Id = 6,
+                    Type = "Valve",
+                    SerialNumber = "123456785",
+                    LastCheckDate = new DateTime(2020, 6, 1),
+                    NextCheckDate = new DateTime(2021, 12, 1),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    Id = 7,
+                    Type = "Fire Extinguisher",
+                    SerialNumber = "123456786",
+                    LastCheckDate = new DateTime(2020, 3, 28),
+                    NextCheckDate = new DateTime(2021, 12, 1),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    
+                    Id = 8,
+                    Type = "Valve",
+                    SerialNumber = "123456787",
+                    LastCheckDate = new DateTime(2020, 6, 1),
+                    NextCheckDate = new DateTime(2021, 4, 11),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    Id = 9,
+                    Type = "Heater",
+                    SerialNumber = "123456788",
+                    LastCheckDate = new DateTime(2020, 6, 1),
+                    NextCheckDate = new DateTime(2021, 11, 30),
+                    ControlStationId = 1,
+                    UserId = 1
+                },
+                new StationItem
+                {
+                    Id = 10,
+                    Type = "Filter",
+                    SerialNumber = "123454782",
+                    LastCheckDate = new DateTime(2020, 7, 1),
+                    NextCheckDate = new DateTime(2020, 12, 20),
                     ControlStationId = 1,
                     UserId = 1
                 });
