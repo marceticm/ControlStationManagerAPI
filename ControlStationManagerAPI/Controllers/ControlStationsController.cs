@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 namespace ControlStationManagerAPI.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")] // to do: rename controller to plural
+    [Route("api/[controller]")]
     [ApiController]
-    public class ControlStationController : ControllerBase // to do: implement logging
+    public class ControlStationsController : ControllerBase // to do: implement logging
     {
         private readonly IControlStationService _controlStationService;
         private readonly int userId;
 
-        public ControlStationController(IControlStationService controlStationService,
+        public ControlStationsController(IControlStationService controlStationService,
             IHttpContextAccessor httpContextAccessor)
         {
             _controlStationService = controlStationService;
