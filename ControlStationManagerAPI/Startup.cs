@@ -45,6 +45,9 @@ namespace ControlStationManagerAPI
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IStationItemRepository, StationItemRepository>();
+            services.AddScoped<IStationItemService, StationItemService>();
+
             services.AddSingleton(Configuration);
 
             services.AddHttpContextAccessor();

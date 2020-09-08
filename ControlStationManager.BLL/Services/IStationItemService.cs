@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControlStationManager.BLL.Services
 {
-    interface IStationItemService
+    public interface IStationItemService
     {
         Task<IEnumerable<ControlStationItemDto>> GetStationItems(int userId, int stationId);
         Task<ControlStationItemDto> GetStationItem(int userId, int stationId, int itemId);
