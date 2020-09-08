@@ -37,5 +37,18 @@ namespace ControlStationManagerAPI.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("{stationItemId}")]
+        public async Task<ActionResult<ControlStationItemDto>> GetStationItem(
+            int controlStationId, int stationItemId)
+        {
+            var result = await _stationItemService.GetStationItem(userId, controlStationId, stationItemId);
+            if (result == null)
+                return NotFound();
+
+            return result;
+        }
+
+
     }
 }

@@ -24,6 +24,14 @@ namespace ControlStationManager.DAL.Repositories
                 .ToListAsync();
         }
 
+        public async Task<StationItem> Get(int userId, int stationId, int itemId)
+        {
+            return await _context.StationItems
+                .Include(x => x.ControlStation)
+                .FirstOrDefaultAsync(x => x.UserId == userId
+                    && x.ControlStationId == stationId && x.Id == itemId);
+        }
+
         public Task<StationItem> Add(StationItem entity)
         {
             throw new NotImplementedException();
@@ -34,9 +42,6 @@ namespace ControlStationManager.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<StationItem> Get(int userId, int stationId, int itemId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

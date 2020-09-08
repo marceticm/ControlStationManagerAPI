@@ -35,7 +35,8 @@ namespace ControlStationManager.BLL.Services
 
         public async Task<ControlStationItemDto> GetStationItem(int userId, int stationId, int itemId)
         {
-            throw new NotImplementedException();
+            var stationitem = await _itemRepository.Get(userId, stationId, itemId);
+            return _mapper.Map<ControlStationItemDto>(stationitem);
         }
 
 
