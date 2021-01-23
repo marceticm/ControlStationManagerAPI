@@ -9,6 +9,8 @@ namespace ControlStationManager.DAL.Repositories
         Task<IEnumerable<StationItem>> GetAll(int userId, int stationId);
         Task<StationItem> Get(int userId, int stationId, int itemId);
         Task<StationItem> Add(StationItem entity);
-        Task<StationItem> Remove(int userId, int id);
+        //Task<StationItem> Remove(int userId, int id);
+        Task<bool> StationItemExists(int stationId, int itemId, string serialNumber);
+
     }
 }

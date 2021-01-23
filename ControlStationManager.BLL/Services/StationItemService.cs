@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ControlStationManager.DAL.Entities;
 using ControlStationManager.DAL.Models;
 using ControlStationManager.DAL.Repositories;
 using System;
@@ -39,6 +40,28 @@ namespace ControlStationManager.BLL.Services
             return _mapper.Map<ControlStationItemDto>(stationitem);
         }
 
+        public async Task<ControlStationItemDto> Add(int userId, int stationId, StationItemForCreateDto stationItem)
+        {
+            if (stationItem == null)
+                return null;
 
+            var controlStation = await _stationRepository.Get(userId, stationId);
+            if (controlStation == null)
+            {
+                throw new ControlStationNotFoundException(stationId);
+            }
+
+            if (await _itemRepository.StationItemExists(stationId, 0, stationItem.SerialNumber))
+            {
+                throw new InvalidControlStationItemException(stationItem.SerialNumber);
+            }
+
+            var mappedStationItem = _mapper.Map<StationItem>(stationItem);
+            mappedStationItem.ControlStationId = stationId;
+            mappedStationItem.UserId = userId;
+            var createdStation = await _itemRepository.Add(mappedStationItem);
+
+            return _mapper.Map<ControlStationItemDto>(createdStation);
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace ControlStationManagerAPI.Controllers
             userId = 1;
         }
 
-        [HttpGet]
+        [HttpGet] // implement /all param
         public async Task<ActionResult<ControlStationItemDto>> GetStationItems(int controlStationId)
         {
             IEnumerable<ControlStationItemDto> result;
@@ -47,6 +47,27 @@ namespace ControlStationManagerAPI.Controllers
                 return NotFound();
 
             return result;
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult<ControlStationDto>> CreateStationItem(
+            int controlStationId, StationItemForCreateDto stationItem)
+        {
+            ControlStationItemDto createdItem;
+            try
+            {
+                createdItem = await _stationItemService.Add(userId, controlStationId, stationItem);
+            }
+            catch (InvalidControlStationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            if (createdItem == null)
+                return BadRequest();
+
+            return Created("", createdItem);
+            //return CreatedAtAction(nameof(GetControlStation), new { id = createdStation.Id }, createdStation);
         }
 
 

@@ -10,6 +10,8 @@ namespace ControlStationManagerAPI.MapProfiles
         {
             CreateMap<StationItem, ControlStationItemDto>()
                 .ForMember(dest => dest.ControlStationName, opt => opt.MapFrom(src => src.ControlStation.Name));
+
+            CreateMap<StationItemForCreateDto, StationItem>();
         }
     }
 }

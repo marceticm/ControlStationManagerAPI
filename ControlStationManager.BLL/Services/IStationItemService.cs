@@ -10,7 +10,7 @@ namespace ControlStationManager.BLL.Services
     {
         Task<IEnumerable<ControlStationItemDto>> GetStationItems(int userId, int stationId);
         Task<ControlStationItemDto> GetStationItem(int userId, int stationId, int itemId);
-        //Task<ControlStationItemDto> Add(ControlStationForCreateDto controlStation);
+        Task<ControlStationItemDto> Add(int userId, int controlStationId, StationItemForCreateDto stationItem);
         //Task<ControlStationItemDto> Update(int userId, int stationId, ControlStationForCreateDto controlStation);
         //Task<ControlStationItemDto> Remove(int userId, int stationId);
     }
