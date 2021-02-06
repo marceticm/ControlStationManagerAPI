@@ -1,5 +1,6 @@
 ﻿using ControlStationManager.BLL.Services;
 using ControlStationManager.DAL.Models;
+using ControlStationManager.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +52,7 @@ namespace ControlStationManagerAPI.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ControlStationDto>> CreateStationItem(
+        public async Task<ActionResult<ControlStationItemDto>> CreateStationItem(
             int controlStationId, StationItemForCreateDto stationItem)
         {
             ControlStationItemDto createdItem;
@@ -59,7 +60,7 @@ namespace ControlStationManagerAPI.Controllers
             {
                 createdItem = await _stationItemService.Add(userId, controlStationId, stationItem);
             }
-            catch (InvalidControlStationException ex)
+            catch (InvalidControlStationItemException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -70,6 +71,24 @@ namespace ControlStationManagerAPI.Controllers
             //return CreatedAtAction(nameof(GetControlStation), new { id = createdStation.Id }, createdStation);
         }
 
-
+        [HttpPut("{itemId}")]
+        public async Task<ActionResult<ControlStationItemDto>> UpdateStationItem(
+            int controlStationId, int itemId, StationItemForCreateDto stationItem)
+        {
+            ControlStationItemDto updatedItem;
+            try
+            {
+                updatedItem = await _stationItemService.Update(userId, controlStationId, itemId, stationItem);
+            }
+            catch (StationItemNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidControlStationItemException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return updatedItem;
+        }
     }
 }

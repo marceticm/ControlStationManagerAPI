@@ -4,6 +4,7 @@ using ControlStationManager.DAL.Models;
 using ControlStationManager.DAL.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace ControlStationManager.BLL.Services
@@ -51,10 +52,7 @@ namespace ControlStationManager.BLL.Services
                 throw new ControlStationNotFoundException(stationId);
             }
 
-            if (await _itemRepository.StationItemExists(stationId, 0, stationItem.SerialNumber))
-            {
-                throw new InvalidControlStationItemException(stationItem.SerialNumber);
-            }
+            await CheckSerialNumber(stationId, 0, stationItem.SerialNumber);
 
             var mappedStationItem = _mapper.Map<StationItem>(stationItem);
             mappedStationItem.ControlStationId = stationId;
@@ -62,6 +60,69 @@ namespace ControlStationManager.BLL.Services
             var createdStation = await _itemRepository.Add(mappedStationItem);
 
             return _mapper.Map<ControlStationItemDto>(createdStation);
+        }
+
+        public async Task<ControlStationItemDto> Update(int userId, int stationId, int itemId, StationItemForCreateDto stationItem)
+        {
+            await CheckIfItemExists(userId, stationId, itemId);
+            await CheckSerialNumber(stationId, itemId, stationItem.SerialNumber);
+
+            var mappedStationItem = _mapper.Map<StationItem>(stationItem);
+            var updatedItem = await _itemRepository.Update(userId, stationId, itemId, mappedStationItem);
+            if (updatedItem == null)
+            {
+                throw new StationItemNotFoundException(stationId);
+            }
+
+            return _mapper.Map<ControlStationItemDto>(updatedItem);
+        }
+
+        #region Helpers
+        private async Task CheckIfItemExists(int userId, int stationId, int itemId)
+        {
+            var itemToUpdate = await GetStationItem(userId, stationId, itemId);
+            if (itemToUpdate == null)
+            {
+                throw new StationItemNotFoundException(itemId);
+            }
+        }
+
+        private async Task CheckSerialNumber(int stationId, int itemId, string serialNumber)
+        {
+            if (await _itemRepository.SerialNumberExists(stationId, itemId, serialNumber))
+            {
+                throw new InvalidControlStationItemException(serialNumber);
+            }
+        }
+        #endregion
+    }
+
+    [Serializable]
+    public class StationItemNotFoundException : Exception
+    {
+        public StationItemNotFoundException()
+        {
+        }
+
+        public StationItemNotFoundException(int itemId)
+            : base(String.Format($"Station item with id = {itemId} not found."))
+        {
+
+        }
+    }
+
+    [Serializable]
+    public class InvalidControlStationItemException : Exception
+    {
+        public InvalidControlStationItemException()
+        {
+
+        }
+
+        public InvalidControlStationItemException(string serialNumber)
+        : base(String.Format("ControlStation Item with serial number: {0} already exists.", serialNumber))
+        {
+
         }
     }
 }

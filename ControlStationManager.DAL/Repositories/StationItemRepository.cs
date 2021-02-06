@@ -44,7 +44,7 @@ namespace ControlStationManager.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<bool> StationItemExists(int stationId, int itemId, string serialNumber)
+        public async Task<bool> SerialNumberExists(int stationId, int itemId, string serialNumber)
         {
             if (itemId == 0) // insert
             {
@@ -60,20 +60,23 @@ namespace ControlStationManager.DAL.Repositories
                 && x.SerialNumber == serialNumber);
             }
         }
-    }
 
-    [Serializable]
-    public class InvalidControlStationItemException : Exception
-    {
-        public InvalidControlStationItemException()
+        public async Task<StationItem> Update(int userId, int stationId, int itemId, StationItem stationItem)
         {
+            var result = await _context.StationItems
+                .FirstOrDefaultAsync(x => x.Id == itemId && x.UserId == userId && x.ControlStationId == stationId);
 
-        }
+            if (result != null)
+            {
+                result.Type = stationItem.Type;
+                result.SerialNumber = stationItem.SerialNumber;
+                result.LastCheckDate = stationItem.LastCheckDate;
+                result.NextCheckDate = stationItem.NextCheckDate;
 
-        public InvalidControlStationItemException(string serialNumber)
-        : base(String.Format("ControlStation Item with serial number: {0} already exists.", serialNumber))
-        {
+                await _context.SaveChangesAsync();
+            }
 
+            return result;
         }
     }
 }
