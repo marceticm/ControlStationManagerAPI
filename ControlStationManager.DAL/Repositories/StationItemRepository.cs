@@ -39,9 +39,18 @@ namespace ControlStationManager.DAL.Repositories
             return stationItem;
         }
 
-        public Task<StationItem> Remove(int userId, int id)
+        public async Task<StationItem> Remove(int userId, int itemId)
         {
-            throw new NotImplementedException();
+            var item = _context.StationItems
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.Id == itemId);
+
+            if (item != null)
+            {
+                _context.StationItems.Remove(item.Result);
+                await _context.SaveChangesAsync();
+                return item.Result;
+            }
+            return null;
         }
 
         public async Task<bool> SerialNumberExists(int stationId, int itemId, string serialNumber)

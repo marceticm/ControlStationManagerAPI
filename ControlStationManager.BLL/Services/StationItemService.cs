@@ -77,6 +77,14 @@ namespace ControlStationManager.BLL.Services
             return _mapper.Map<ControlStationItemDto>(updatedItem);
         }
 
+        public async Task<ControlStationItemDto> Remove(int userId, int controlStationId, int itemId)
+        {
+            await CheckIfItemExists(userId, controlStationId, itemId);
+
+            var deletedItem = await _itemRepository.Remove(userId, itemId);
+            return _mapper.Map<ControlStationItemDto>(deletedItem);
+        }
+
         #region Helpers
         private async Task CheckIfItemExists(int userId, int stationId, int itemId)
         {

@@ -10,6 +10,6 @@ namespace ControlStationManager.BLL.Services
         Task<ControlStationItemDto> GetStationItem(int userId, int stationId, int itemId);
         Task<ControlStationItemDto> Add(int userId, int controlStationId, StationItemForCreateDto stationItem);
         Task<ControlStationItemDto> Update(int userId, int stationId, int itemId, StationItemForCreateDto stationItem);
-        //Task<ControlStationItemDto> Remove(int userId, int stationId);
+        Task<ControlStationItemDto> Remove(int userId, int stationId, int itemId);
     }
 }

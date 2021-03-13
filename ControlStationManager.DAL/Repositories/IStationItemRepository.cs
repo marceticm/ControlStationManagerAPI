@@ -10,7 +10,7 @@ namespace ControlStationManager.DAL.Repositories
         Task<StationItem> Get(int userId, int stationId, int itemId);
         Task<StationItem> Add(StationItem entity);
         Task<StationItem> Update(int userId, int stationId, int itemId, StationItem stationItem);
-        //Task<StationItem> Remove(int userId, int id);
+        Task<StationItem> Remove(int userId, int itemId);
         Task<bool> SerialNumberExists(int stationId, int itemId, string serialNumber);
 
     }

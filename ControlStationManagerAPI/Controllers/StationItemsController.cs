@@ -90,5 +90,20 @@ namespace ControlStationManagerAPI.Controllers
             }
             return updatedItem;
         }
+
+        [HttpDelete("{itemId}")]
+        public async Task<ActionResult<ControlStationItemDto>> DeleteControlStation(int controlStationId, int itemId)
+        {
+            ControlStationItemDto result;
+            try
+            {
+                result = await _stationItemService.Remove(userId, controlStationId, itemId);
+            }
+            catch (StationItemNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            return result;
+        }
     }
 }
